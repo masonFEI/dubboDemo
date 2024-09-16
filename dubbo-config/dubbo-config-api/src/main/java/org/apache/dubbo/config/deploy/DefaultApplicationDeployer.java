@@ -208,6 +208,7 @@ public class DefaultApplicationDeployer extends AbstractDeployer<ApplicationMode
             return;
         }
         // Ensure that the initialization is completed when concurrent calls
+        // 可能会并发访问
         synchronized (startLock) {
             if (initialized) {
                 return;
