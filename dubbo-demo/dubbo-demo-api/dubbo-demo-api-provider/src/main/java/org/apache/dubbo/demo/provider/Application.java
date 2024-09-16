@@ -33,8 +33,12 @@ public class Application {
     }
 
     private static void startWithBootstrap() {
+        // ServiceConfig 针对这个dubbo服务的一些配置信息
+        // DemoServiceImpl 服务的接口必须有实现代码
         ServiceConfig<DemoServiceImpl> service = new ServiceConfig<>();
+        // 设置服务暴露出去的接口
         service.setInterface(DemoService.class);
+        // 设置暴露出去的接口的实现代码
         service.setRef(new DemoServiceImpl());
 
         DubboBootstrap bootstrap = DubboBootstrap.getInstance();
