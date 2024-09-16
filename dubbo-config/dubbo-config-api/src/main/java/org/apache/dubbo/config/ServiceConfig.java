@@ -327,7 +327,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             }
             if (this.shouldExport()) {
                 this.init();
-
+                // 延迟发布
                 if (shouldDelay()) {
                     // should register if delay export
                     doDelayExport();
@@ -337,6 +337,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
                     // should not register by default
                     doExport(RegisterTypeEnum.MANUAL_REGISTER);
                 } else {
+                    // 正式发布
                     doExport(registerType);
                 }
             }
