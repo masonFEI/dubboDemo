@@ -311,6 +311,8 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
                 return;
             }
 
+            // 对暴露服务接口进行处理，通过java反射拿到接口Class
+            // 以及Class里面的方法，每个方法其实就是一个当前服务对外保罗的可以调用的小接口
             for (Method method : methods) {
                 if (ConfigurationUtils.hasSubProperties(configProperties, method.getName())) {
                     MethodConfig methodConfig = getMethodByName(method.getName());
