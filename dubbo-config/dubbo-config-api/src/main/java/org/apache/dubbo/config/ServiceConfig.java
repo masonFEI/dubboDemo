@@ -292,11 +292,14 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
      * for early init serviceMetadata
      */
     public void init() {
+        // 在一个中间件里面，会大量的运用到juc技术
         if (this.initialized.compareAndSet(false, true)) {
             // load ServiceListeners from extension
             ExtensionLoader<ServiceListener> extensionLoader = this.getExtensionLoader(ServiceListener.class);
             this.serviceListeners.addAll(extensionLoader.getSupportedExtensionInstances());
         }
+        // 初始化服务元数据
+        // 最最核心的，就是service对应的接口，实现类到底是哪一个
         initServiceMetadata(provider);
         serviceMetadata.setServiceType(getInterfaceClass());
         serviceMetadata.setTarget(getRef());
