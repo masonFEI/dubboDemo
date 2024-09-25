@@ -541,8 +541,8 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         if (StringUtils.isEmpty(path)) {
             path = interfaceName;
         }
-        doExportUrls(registerType);
-        exported();
+        doExportUrls(registerType);// 发布服务
+        exported(); // 服务发布完成
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
