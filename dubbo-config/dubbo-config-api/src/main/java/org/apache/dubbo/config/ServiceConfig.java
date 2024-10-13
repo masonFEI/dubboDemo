@@ -547,9 +547,17 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void doExportUrls(RegisterTypeEnum registerType) {
+        // 真实的类型叫做ModuleModel
+        // getScopeModel(),再去获取service repository, 以及之前也获取过其他的组件
+        // dubbo这里，把他的各个组件，都集中在了ScopeModel=ModuleModel，ScopeModel类似于门面设计模式
+        // ScopeModel,ModuleModel,ApplicationModel,FrameworkModel,多个model组成一个体系，里面会包含一些组件
+        // ServiceRepository 核心本质是dubbo服务数据存储组件
         ModuleServiceRepository repository = getScopeModel().getServiceRepository();
         ServiceDescriptor serviceDescriptor;
         final boolean serverService = ref instanceof ServerService;
+
+        // 一个系统其实是可以发布多个dubbo服务，每个dubbo服务的本质和核心是一个interface和一个实现类
+        // 把当前要发布的服务注册到了dubbo服务数据存储组件
         if (serverService) {
             serviceDescriptor = ((ServerService) ref).getServiceDescriptor();
             if (!this.provider.getUseJavaPackageAsPath()) {
