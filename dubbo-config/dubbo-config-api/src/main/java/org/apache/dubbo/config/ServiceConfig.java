@@ -568,6 +568,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         } else {
             serviceDescriptor = repository.registerService(getInterfaceClass());
         }
+        // 服务提供者，你是暴露服务出去的，provider
         providerModel = new ProviderModel(
                 serviceMetadata.getServiceKey(),
                 ref,
@@ -581,7 +582,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
         providerModel.setDestroyRunner(getDestroyRunner());
         repository.registerProvider(providerModel);
-
+        // 生成的注册URL，本身是2181的端口号，是针对zk进行注册的
         List<URL> registryURLs = ConfigValidationUtils.loadRegistries(this, true);
 
         for (ProtocolConfig protocolConfig : protocols) {
