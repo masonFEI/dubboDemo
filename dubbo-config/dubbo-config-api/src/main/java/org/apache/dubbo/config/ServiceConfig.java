@@ -954,6 +954,12 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             url = url.addParameter(REGISTER_KEY, false);
         }
 
+        // proxyFactory proxy,动态代理
+        // ref,实现类
+        // interfaceClass,接口
+        // url服务实例对外暴露出去的一些核心信息
+        // Invoker调用组件，当dubbo的netty server 对外网络见听到连接，处理请求，必须要对秦秋有一个调用组件
+        // proxyFactory 基于我们的DemoService接口生成的动态代理，被调用接口的时候，底层会回调你自己写的实现类，DemoServiceImpl
         Invoker<?> invoker = proxyFactory.getInvoker(ref, (Class) interfaceClass, url);
         if (withMetaData) {
             invoker = new DelegateProviderMetaDataInvoker(invoker, this);
@@ -968,6 +974,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
      * always export injvm
      */
     private void exportLocal(URL url) {
+        // 本地服务发布
         URL local = URLBuilder.from(url)
                 .setProtocol(LOCAL_PROTOCOL)
                 .setHost(LOCALHOST_VALUE)
