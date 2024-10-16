@@ -593,6 +593,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
                 // In case user specified path, register service one more time to map it to path.
                 repository.registerService(pathKey, interfaceClass);
             }
+            // 核心发布流程
             doExportUrlsFor1Protocol(protocolConfig, registryURLs, registerType);
         }
 
