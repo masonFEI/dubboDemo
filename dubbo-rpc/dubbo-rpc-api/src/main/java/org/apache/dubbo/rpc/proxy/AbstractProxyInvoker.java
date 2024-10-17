@@ -97,6 +97,7 @@ public abstract class AbstractProxyInvoker<T> implements Invoker<T> {
                 }
             }
 
+            // 执行doInvoke之后，必然会把你封装的这个实现类，反射去调用你的实现类的方法
             Object value = doInvoke(
                     proxy, invocation.getMethodName(), invocation.getParameterTypes(), invocation.getArguments());
 
