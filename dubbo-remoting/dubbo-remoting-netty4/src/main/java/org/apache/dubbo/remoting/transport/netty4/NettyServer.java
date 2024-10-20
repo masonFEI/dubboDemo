@@ -97,7 +97,10 @@ public class NettyServer extends AbstractServer {
         // 必须创建一个ServerBootstrap
         bootstrap = new ServerBootstrap();
 
+        // 不停地去轮询监听网络事件
+        // boss 负责对端口号监听是否有外部系统的连接请求
         bossGroup = createBossGroup();
+        // 很多线程并发的进行处理
         workerGroup = createWorkerGroup();
 
         final NettyServerHandler nettyServerHandler = createNettyServerHandler();
