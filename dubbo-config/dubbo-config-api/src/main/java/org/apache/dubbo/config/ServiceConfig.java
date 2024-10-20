@@ -851,6 +851,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
             // export to local if the config is not remote (export to remote only when config is remote)
             if (!SCOPE_REMOTE.equalsIgnoreCase(scope)) {
+                // 必须先进行本地发布
                 exportLocal(url);
             }
 
@@ -868,6 +869,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
                             .build();
                 }
 
+                // 发布到远程
                 url = exportRemote(url, registryURLs, registerType);
                 if (!isGeneric(generic) && !getScopeModel().isInternal()) {
                     MetadataUtils.publishServiceDefinition(url, providerModel.getServiceModel(), getApplicationModel());
@@ -927,7 +929,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
                         logger.info("Export dubbo service " + interfaceClass.getName() + " to url " + url);
                     }
                 }
-
+                // 向zk服务实例注册
                 doExportUrl(registryURL.putAttribute(EXPORT_KEY, url), true, registerType);
             }
 
@@ -969,7 +971,9 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             invoker = new DelegateProviderMetaDataInvoker(invoker, this);
         }
         // 一次服务实例的发布
+        // registryProtocal,里面还封装了一个dubboProtocol
         Exporter<?> exporter = protocolSPI.export(invoker);
+        // 可以理解protocol对invoker在干什么
         exporters
                 .computeIfAbsent(registerType, k -> new CopyOnWriteArrayList<>())
                 .add(exporter);
@@ -988,6 +992,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         local = local.setScopeModel(getScopeModel()).setServiceModel(providerModel);
         local = local.addParameter(EXPORTER_LISTENER_KEY, LOCAL_PROTOCOL);
         doExportUrl(local, false, RegisterTypeEnum.AUTO_REGISTER);
+        // exportLocal 发布到本地，也就是系统内部，jvm内部做一次export发布
         logger.info("Export dubbo service " + interfaceClass.getName() + " to local registry url : " + local);
     }
 

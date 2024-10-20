@@ -94,6 +94,7 @@ public class NettyServer extends AbstractServer {
      */
     @Override
     protected void doOpen() throws Throwable {
+        // 必须创建一个ServerBootstrap
         bootstrap = new ServerBootstrap();
 
         bossGroup = createBossGroup();
