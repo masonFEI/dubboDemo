@@ -287,6 +287,7 @@ public class RegistryProtocol implements Protocol, ScopeModelAware {
                 .convert(Boolean.class, ENABLE_26X_CONFIGURATION_LISTEN, true)) {
             if (!registry.isServiceDiscovery()) {
                 // Deprecated! Subscribe to override rules in 2.6.x or before.
+                // 订阅
                 registry.subscribe(overrideSubscribeUrl, overrideSubscribeListener);
             }
         }

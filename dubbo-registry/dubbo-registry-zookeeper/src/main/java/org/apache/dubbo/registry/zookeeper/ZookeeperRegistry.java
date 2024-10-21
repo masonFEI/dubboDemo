@@ -171,6 +171,7 @@ public class ZookeeperRegistry extends CacheableFailbackRegistry {
     @Override
     public void doRegister(URL url) {
         try {
+            // 真正核心的dubbo往zk进行服务实例注册的方法
             checkDestroyed();
             zkClient.create(toUrlPath(url), url.getParameter(DYNAMIC_KEY, true), true);
         } catch (Throwable e) {
