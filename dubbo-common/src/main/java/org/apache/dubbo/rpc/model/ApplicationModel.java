@@ -87,6 +87,7 @@ public class ApplicationModel extends ScopeModel {
      * @return the global default ApplicationModel
      */
     public static ApplicationModel defaultModel() {
+        // 默认对象
         // should get from default FrameworkModel, avoid out of sync
         return FrameworkModel.defaultModel().defaultApplication();
     }
